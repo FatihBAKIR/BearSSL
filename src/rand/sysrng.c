@@ -189,6 +189,24 @@ seeder_win32(const br_prng_class **ctx)
 }
 #endif
 
+#if BR_USE_TOS_RAND
+extern uint32_t tos_rand_source(void);
+
+static int
+seeder_tos(const br_prng_class **ctx)
+{
+	uint32_t tmp[32 / sizeof(uint32_t)];
+	size_t i;
+
+	for (i=0; i<sizeof(tmp)/sizeof(tmp[0]); i++) {
+		tmp[i] = tos_rand_source();
+	}
+
+	(*ctx)->update(ctx, tmp, sizeof tmp);
+	return 1;
+}
+#endif
+
 /*
  * An aggregate seeder that uses RDRAND, and falls back to an OS-provided
  * source if RDRAND fails.
@@ -243,6 +261,11 @@ br_prng_seeder_system(const char **name)
 		*name = "win32";
 	}
 	return &seeder_win32;
+#elif BR_USE_TOS_RAND
+	if (name != NULL) {
+		*name = "tos";
+	}
+	return &seeder_tos;
 #else
 	if (name != NULL) {
 		*name = "none";

@@ -354,6 +354,12 @@
 #endif
 #endif
 
+#ifndef BR_USE_TOS_RAND
+#if defined(TOS)
+#define BR_USE_TOS_RAND		1
+#endif
+#endif
+
 /*
  * POWER8 crypto support. We rely on compiler macros for the
  * architecture, since we do not have a reliable, simple way to detect
@@ -439,7 +445,7 @@
 #ifndef BR_USE_UNIX_TIME
 #if defined __unix__ || defined __linux__ \
 	|| defined _POSIX_SOURCE || defined _POSIX_C_SOURCE \
-	|| (defined __APPLE__ && defined __MACH__)
+	|| (defined __APPLE__ && defined __MACH__) || defined(TOS)
 #define BR_USE_UNIX_TIME   1
 #endif
 #endif

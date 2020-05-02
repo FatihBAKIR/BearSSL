@@ -6,6 +6,10 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_library(bearssl "")
 target_include_directories(bearssl PUBLIC inc)
 
+if (TOS)
+    target_compile_definitions(bearssl PUBLIC TOS)
+endif()
+
 add_library(BearSSL::BearSSL ALIAS bearssl)
 
 add_subdirectory(src)
