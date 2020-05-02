@@ -308,3 +308,5 @@ target_include_directories(bearssl PRIVATE .)
 
 add_library(bearssl_private INTERFACE)
 target_include_directories(bearssl_private INTERFACE .)
+
+add_library(BearSSL::Private ALIAS bearssl_private)

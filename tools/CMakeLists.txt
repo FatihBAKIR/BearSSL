@@ -20,4 +20,4 @@ target_sources(brssl PRIVATE
     verify.c
     xmem.c
 )
-target_link_libraries(brssl PRIVATE bearssl)
+target_link_libraries(brssl PRIVATE BearSSL::BearSSL)
